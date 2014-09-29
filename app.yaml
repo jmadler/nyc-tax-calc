@@ -5,6 +5,17 @@ api_version: 1
 threadsafe: yes
 
 handlers:
+- url: /js
+  static_dir: js
+- url: /css
+  static_dir: css
+- url: /img
+  static_dir: img
+- url: /robots.txt
+  static_dir: static
+- url: /favicon.ico
+  static_dir: static
+- url: /apple-touch-icon-precomposed.png
+  static_dir: static
 - url: .*
   script: main.bottle
-
