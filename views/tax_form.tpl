@@ -4,22 +4,34 @@
 
 <form action="/results" method="get">
     <fieldset>
+% if defined('invalid') and 'residence' in invalid:
+        <div class="question invalid">
+% else:
         <div class="question">
-            <label for="live_in" class="question">Residence</label>
-            <select id="live_in">
-                <option name="NYC">NYC (Year-round)</option>
-                <option name="NYS">New York State (other than NYC)</option>
-                <option name="NJ">New Jersey</option>
-                <option name="CT">Connecticut</option>
+% end
+            <label for="residence" class="question">Residence</label>
+            <select id="residence" name="residence">
+                <option name="residence" value="NYC">NYC (Year-round)</option>
+                <option name="residence" value="NYS">New York State (other than NYC)</option>
+                <option name="residence" value="NJ">New Jersey</option>
+                <option name="residence" value="CT">Connecticut</option>
             </select>
         </div>
+% if defined('invalid') and 'deduction' in invalid:
+        <div class="question invalid">
+% else:
         <div class="question">
+% end
             <label for="deduction" class="question">Deduction</label> 
-            <input type="text" id="deduction" value="5800" />
+            <input type="text" id="deduction" name="deduction" value="5800" />
         </div>
+% if defined('invalid') and 'gross' in invalid:
+        <div class="question invalid">
+% else:
         <div class="question">
+% end
             <label for="gross" class="question">Taxable Income (AGI)</label>
-            <input type="text" id="gross" />
+            <input type="text" id="gross" name="gross" />
         </div>
         <input type="submit" class="" />
     </fieldset>

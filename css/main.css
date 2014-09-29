@@ -135,9 +135,6 @@ div.question label {
     width: 15%;
     margin-right: 0.5em;
     text-align: right;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    -o-text-overflow: ellipsis;
 }
 
 div.question input,
@@ -147,6 +144,11 @@ div.question select {
     margin: 0;
     padding: 0;
 }
+
+div.invalid label {
+    color: red;
+}
+
 
 /* ==========================================================================
    Helper classes
