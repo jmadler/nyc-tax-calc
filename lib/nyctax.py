@@ -3,6 +3,9 @@ def tax_calc(gross, deduction, residence):
     deduction = float(deduction)
     if gross < 83600 or gross > 174400:
         raise
+    if residence != 'NYC':
+        # We don't yet support other areas.
+        raise
 
     tax_total = 0
 

@@ -25,6 +25,10 @@
             for illustrative uses and is likely to contain out-of-date data.
             Consult an accountant for real numbers, which vary based on a
             number of factors that I probably don't know about.</p>
+            <p>This site is undergoing active development and is not feature
+            complete.  Source code is available at github: <a
+            href="https://github.com/jmadler/nyc-tax-calc">jmadler/nyc-tax-calc
+            </a></p>
         </div>
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
