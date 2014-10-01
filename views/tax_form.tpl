@@ -1,6 +1,7 @@
 % rebase('base.tpl', title='NYC Tax Calculator')
 <h1>2013 NYC Tax Calculator</h1>
-<p>Here's a quick and easy way to calculate your net take-home pay and tax rate if you live and/or work in NYC</p>
+<p>Here's a quick and easy way to calculate your net take-home pay and tax rate if you live and/or work in NYC.</p>
+<p>This is a very simple calculator.  It only handles those filing singly, and doesn't handle any special cases (e.g. EITC).  I can't vouch for its accuracy, either.</p>
 
 <form action="/results" method="get">
     <fieldset>
