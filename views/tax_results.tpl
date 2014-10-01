@@ -11,5 +11,5 @@
     <br />
     Net: {{net_fmtd}}
     <br />
-    Tax Rate: {{round((tax / gross), 2)}}%
+    Tax Rate: {{round( 100 * (tax / gross), 2)}}%
 </p>
