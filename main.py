@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 from bottle import Bottle, template, request
 from nyctax import tax_calc
+import locale
+locale.setlocale(locale.LC_ALL, 'en_US')
 
 bottle = Bottle()
 
@@ -45,6 +47,9 @@ def tax_results():
             tax_results['tax'] = tax_calc(**tax_results)
         except Exception:
             raise
+        tax_results['net'] = tax_results['gross'] - tax_results['tax'];
+        for i in 'deduction', 'gross', 'tax', 'net':
+            tax_results[i + '_fmtd'] = locale.currency( tax_results[i], grouping=True )
         return template('tax_results', **tax_results)
 
 # Define an handler for 404 errors.
@@ -52,4 +57,3 @@ def tax_results():
 def error_404(error):
     """Return a custom 404 error."""
     return 'Sorry, nothing at this URL.'
-
