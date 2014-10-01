@@ -1,5 +1,5 @@
 % rebase('base.tpl', title='NYC Tax Calculator')
-<h1>Hi there!</h1>
+<h1>2013 NYC Tax Calculator</h1>
 <p>Here's a quick and easy way to calculate your net take-home pay and tax rate if you live and/or work in NYC</p>
 
 <form action="/results" method="get">
