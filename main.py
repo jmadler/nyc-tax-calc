@@ -38,6 +38,8 @@ def tax_results():
                 invalid.append(i)
         else:
             invalid.append(i)
+    if tax_results['deduction'] > tax_results['gross']:
+        invalid.append('deduction', 'gross')
     if invalid:
         return template('tax_form', invalid=invalid)
     else:
@@ -47,7 +49,7 @@ def tax_results():
             raise
         tax_results['net'] = tax_results['gross'] - tax_results['tax'];
         for i in 'deduction', 'gross', 'tax', 'net':
-            tax_results[i + '_fmtd'] = '$' + str(round(tax_results[i], 2))
+            tax_results[i + '_fmtd'] = '$' + '%.2f' % tax_results[i]
         return template('tax_results', **tax_results)
 
 # Define an handler for 404 errors.
