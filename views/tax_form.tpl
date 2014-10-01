@@ -11,10 +11,7 @@
 % end
             <label for="residence" class="question">Residence</label>
             <select id="residence" name="residence">
-                <option name="residence" value="NYC">NYC (Year-round)</option>
-                <option name="residence" value="NYS">New York State (other than NYC)</option>
-                <option name="residence" value="NJ">New Jersey</option>
-                <option name="residence" value="CT">Connecticut</option>
+                <option name="residence" value="NYC">New York City</option>
             </select>
         </div>
 % if defined('invalid') and 'deduction' in invalid:
