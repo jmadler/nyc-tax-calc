@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 from bottle import Bottle, template, request
 from nyctax import tax_calc
-import locale
-locale.setlocale(locale.LC_ALL, 'en_US')
 
 bottle = Bottle()
 
@@ -49,7 +47,7 @@ def tax_results():
             raise
         tax_results['net'] = tax_results['gross'] - tax_results['tax'];
         for i in 'deduction', 'gross', 'tax', 'net':
-            tax_results[i + '_fmtd'] = locale.currency( tax_results[i], grouping=True )
+            tax_results[i + '_fmtd'] = '$' + str(round(tax_results[i], 2))
         return template('tax_results', **tax_results)
 
 # Define an handler for 404 errors.
