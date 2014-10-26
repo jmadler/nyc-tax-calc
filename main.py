@@ -5,7 +5,7 @@ from nyctax import tax_calc
 bottle = Bottle()
 
 def valid_home(value):
-    permitted = ['NYS', 'NYC', 'CT', 'NJ']
+    permitted = ['NYC']
     if value in permitted:
         return value
     else:
@@ -33,12 +33,13 @@ def tax_results():
     for i in params:
         if request.params.get(i):
             try:
+                # Validate the incoming parameters.
                 tax_results[i] = params[i](request.params.get(i))
             except Exception:
                 invalid.append(i)
         else:
             invalid.append(i)
-    if tax_results['deduction'] > tax_results['gross']:
+    if not invalid and tax_results['deduction'] > tax_results['gross']:
         invalid.append('deduction', 'gross')
     if invalid:
         return template('tax_form', invalid=invalid)
