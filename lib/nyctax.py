@@ -72,7 +72,7 @@ def find_tax_liability(bracket, taxable_income):
     # Given a sorted tax bracket, loop through the list and select the first  (and thus highest) liable bracket.
     # The 'bracket' argument is a sorted list of dictionaries representing levels in a tax bracket.
     # Each bracket row has the following keys: 
-        # 'over': (a minimum applicable income),
+        # 'over': a maximum applicable income to the preceding bracket
         # 'base': in the bracket is the sum of income liabilities for each preceding bracket.  This is used as an optimization. 
         # 'rate': the tax rate, a decimal multiplier, to which income in this bracket is to be taxed.
     for i in bracket:
