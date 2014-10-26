@@ -56,23 +56,23 @@ def tax_calc(gross, deduction, residence):
         { 'over':      0, 'base':         0, 'rate': pct(10) },
     ]
 
-    agi = gross - tax_total - deduction
+    federal_agi = gross - tax_total - deduction
 
     for i in federal_tax_bracket:
-        if agi > i['over']:
+        if federal_agi > i['over']:
             tax_total += i['base']
-            tax_total += i['rate'] * ( agi - i['over'] )
+            tax_total += i['rate'] * ( federal_agi - i['over'] )
             break
 
     # FICA 
     # 6.2% SSA (up to the wage base of 113700)
     # 1.45% Medicare
     # http://www.irs.gov/taxtopics/tc751.html
-    tax_total += (agi * pct(1.45))
+    tax_total += (federal_agi * pct(1.45))
     wage_base = 113700
-    if agi >= wage_base:
+    if federal_agi >= wage_base:
         tax_total += (wage_base * pct(6.2))
     else:
-        tax_total += (agi * pct(6.2))
+        tax_total += (federal_agi * pct(6.2))
 
     return round(tax_total, 2)
