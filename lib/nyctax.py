@@ -17,11 +17,7 @@ def tax_calc(gross, deduction, residence):
     ]
 
     if residence == 'NYC':
-        for i in city_tax_bracket:
-            if gross > i['over']:
-                tax_total += i['base']
-                tax_total += i['rate'] * ( gross - i['over'] )
-                break
+        tax_total += find_tax_liability(city_tax_bracket, gross)
     else:
         # We don't yet support other areas.
         raise Exception
@@ -37,11 +33,10 @@ def tax_calc(gross, deduction, residence):
         { 'over':       0, 'base':     0, 'rate': pct(4.00) },
     ]
 
-    for i in state_tax_bracket:
-        if gross > i['over']:
-            tax_total += i['base']
-            tax_total += i['rate'] * ( gross - i['over'] )
-            break
+    tax_total += find_tax_liability(state_tax_bracket, gross)
+
+    # Federal income tax permits deducting state income tax from 
+    federal_agi = gross - tax_total - deduction
 
     federal_tax_bracket = [
         # where AGI = income - state tax - city tax - standard deduction (5,800) - all other deductions (0)
@@ -56,19 +51,15 @@ def tax_calc(gross, deduction, residence):
         { 'over':      0, 'base':         0, 'rate': pct(10) },
     ]
 
-    federal_agi = gross - tax_total - deduction
-
-    for i in federal_tax_bracket:
-        if federal_agi > i['over']:
-            tax_total += i['base']
-            tax_total += i['rate'] * ( federal_agi - i['over'] )
-            break
+    tax_total += find_tax_liability(federal_tax_bracket, federal_agi)
 
     # FICA 
-    # 6.2% SSA (up to the wage base of 113700)
-    # 1.45% Medicare
     # http://www.irs.gov/taxtopics/tc751.html
-    tax_total += (federal_agi * pct(1.45))
+
+    # 1.45% Medicare
+    tax_total += (federal_agi * pct(1.45)) 
+
+    # 6.2% SSA (up to the wage base of 113700)
     wage_base = 113700
     if federal_agi >= wage_base:
         tax_total += (wage_base * pct(6.2))
@@ -76,3 +67,14 @@ def tax_calc(gross, deduction, residence):
         tax_total += (federal_agi * pct(6.2))
 
     return round(tax_total, 2)
+
+def find_tax_liability(bracket, taxable_income):
+    # Given a sorted tax bracket, loop through the list and select the first  (and thus highest) liable bracket.
+    # The 'bracket' argument is a sorted list of dictionaries representing levels in a tax bracket.
+    # Each bracket row has the following keys: 
+        # 'over': (a minimum applicable income),
+        # 'base': in the bracket is the sum of income liabilities for each preceding bracket.  This is used as an optimization. 
+        # 'rate': the tax rate, a decimal multiplier, to which income in this bracket is to be taxed.
+    for i in bracket:
+        if taxable_income > i['over']:
+            return i['base'] + ( i['rate'] * ( taxable_income - i['over'] ) )
