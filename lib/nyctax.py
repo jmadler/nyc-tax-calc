@@ -68,9 +68,10 @@ def tax_calc(gross, deduction, residence):
     # 6.2% SSA (up to the wage base of 113700)
     # 1.45% Medicare
     # http://www.irs.gov/taxtopics/tc751.html
-    tax_total += (agi * pct(1.45));
-    if agi >= 113700:
-        tax_total += (113700 * pct(6.2))
+    tax_total += (agi * pct(1.45))
+    wage_base = 113700
+    if agi >= wage_base:
+        tax_total += (wage_base * pct(6.2))
     else:
         tax_total += (agi * pct(6.2))
 
